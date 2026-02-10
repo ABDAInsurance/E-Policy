@@ -1,0 +1,22 @@
+[
+  {
+    "TOC": "1216",
+    "Name": "Travel",
+    "Url": "http://192.168.193.127:8080/OonaReportBuilder/api/Report/GenerateEpolicy"
+  },
+  {
+    "TOC": "1220",
+    "Name": "Inflight Insurance",
+    "Url": "http://192.168.193.127:8080/OonaReportBuilder/api/Report/GenerateEpolicy"
+  },
+  {
+    "TOC": "1221",
+    "Name": "Inbound Travel Insurance",
+    "Url": "http://192.168.193.127:8080/OonaReportBuilder/api/Report/GenerateEpolicy"
+  },
+  {
+    "TOC": "1013",
+    "Name": "Critical Illness",
+    "Url": "http://192.168.193.127:8080/OonaReportBuilder/api/Report/GenerateEpolicy"
+  }
+]
