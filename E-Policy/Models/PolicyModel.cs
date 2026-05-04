@@ -12,11 +12,27 @@ namespace E_Policy.Models
 {
     public class PolicyModel : BaseModel
     {
-        private void GenerateDocumentByCare(int ano, string destinationFile, string rptFile)
+        private void GeneratePolicyScheduleByCare(int ano, string destinationFile, string rptFile)
         {
             try
             {
                 string errorMessage = _PSReportService.PolicyCertificateV2Report(ano, destinationFile, rptFile);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    throw new Exception(errorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageException.NoLogMessageException(ex.Message);
+            }
+        }
+
+        private void GeneratePremiumNoteByCare(int ano, string destinationFile, string rptFile)
+        {
+            try
+            {
+                string errorMessage = _NonPSReportService.PremiumNoteV2Report(ano, destinationFile, rptFile);
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     throw new Exception(errorMessage);
@@ -219,19 +235,30 @@ namespace E_Policy.Models
                 
                 destinationPath = string.Format(@"{0}\Result\{1}\{2}", _ApplicationPath, DateTime.Now.ToString("yyyy-MM-dd"), documentNo);
 
-                if (!Directory.Exists(destinationPath))
+                if (Directory.Exists(destinationPath))
                 {
-                    Directory.CreateDirectory(destinationPath);
+                    Directory.Delete(destinationPath, true);
                 }
+
+                Directory.CreateDirectory(destinationPath);
 
                 if (string.IsNullOrEmpty(firstRequest["ApiUrl"].ToString()))
                 {
+                    string rptFile = string.Empty;
+                    string fileName = string.Empty;
+
                     foreach (Dictionary<string, object> request in requests)
                     {
-                        string rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", _ApplicationPath, firstRequest["PartnerCode"], "PC", firstRequest["TOCCode"]);
+                        //---Generate PS---
+                        rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", _ApplicationPath, firstRequest["PartnerCode"], "PC", firstRequest["TOCCode"]);
                         if (firstRequest["PartnerCode"].ToString() == "Default") rptFile = string.Format(@"{0}\RPT\{1}\{2}.rpt", _ApplicationPath, firstRequest["PartnerCode"].ToString(), "PC");
-                        string fileName = string.Format("{0}-{1} (PC).pdf", documentNo, request["CertificateNo"]);
-                        GenerateDocumentByCare(Convert.ToInt32(request["Ano"]), destinationPath + "\\" + fileName, rptFile);
+                        fileName = string.Format("{0}-{1} (PC).pdf", documentNo, request["CertificateNo"]);
+                        GeneratePolicyScheduleByCare(Convert.ToInt32(request["Ano"]), destinationPath + "\\" + fileName, rptFile);
+
+                        //---Generate PN---
+                        rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", _ApplicationPath, firstRequest["PartnerCode"], "PN", firstRequest["TOCCode"]);
+                        fileName = string.Format("{0}-{1} (PN).pdf", documentNo, request["CertificateNo"]);
+                        if (File.Exists(rptFile)) GeneratePremiumNoteByCare(Convert.ToInt32(request["Ano"]), destinationPath + "\\" + fileName, rptFile);
                     }
                 }
                 else

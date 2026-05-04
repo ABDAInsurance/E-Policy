@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://192.168.193.167:8080/PolicySignatureSystem/PSReportBuilder/Build.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://192.168.193.127:8080/PolicySignatureSystem/PSReportBuilder/Build.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Build.xsd" MetadataType="Schema" ID="d0860b02-06bb-40b7-83f3-ad6a09fcc7cb" SourceId="1" SourceUrl="http://192.168.193.167:8080/PolicySignatureSystem/PSReportBuilder/Build.svc?xsd=xsd1" />
-    <MetadataFile FileName="Build.wsdl" MetadataType="Wsdl" ID="c9fee24b-bcf8-41b6-8af6-ff6422e242f3" SourceId="1" SourceUrl="http://192.168.193.167:8080/PolicySignatureSystem/PSReportBuilder/Build.svc?wsdl" />
-    <MetadataFile FileName="Build1.xsd" MetadataType="Schema" ID="f28f1f57-6053-49c7-8779-39579912812b" SourceId="1" SourceUrl="http://192.168.193.167:8080/PolicySignatureSystem/PSReportBuilder/Build.svc?xsd=xsd0" />
-    <MetadataFile FileName="Build.disco" MetadataType="Disco" ID="a5d451e4-7c34-422e-8b32-05b42d5d8096" SourceId="1" SourceUrl="http://192.168.193.167:8080/PolicySignatureSystem/PSReportBuilder/Build.svc?disco" />
+    <MetadataFile FileName="Build2.xsd" MetadataType="Schema" ID="4e000743-5b30-4af2-947a-d79ca0a7ee3e" SourceId="1" SourceUrl="http://192.168.193.127:8080/PolicySignatureSystem/PSReportBuilder/Build.svc?xsd=xsd1" />
+    <MetadataFile FileName="Build1.disco" MetadataType="Disco" ID="b85fb2fd-2e94-433e-97f3-b9659ee6f958" SourceId="1" SourceUrl="http://192.168.193.127:8080/PolicySignatureSystem/PSReportBuilder/Build.svc?disco" />
+    <MetadataFile FileName="Build21.xsd" MetadataType="Schema" ID="94c6d50f-9c26-4906-b42d-ec2e9f858b54" SourceId="1" SourceUrl="http://192.168.193.127:8080/PolicySignatureSystem/PSReportBuilder/Build.svc?xsd=xsd0" />
+    <MetadataFile FileName="Build1.wsdl" MetadataType="Wsdl" ID="5b509c7f-c588-4921-9b09-d8cd2049206f" SourceId="1" SourceUrl="http://192.168.193.127:8080/PolicySignatureSystem/PSReportBuilder/Build.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

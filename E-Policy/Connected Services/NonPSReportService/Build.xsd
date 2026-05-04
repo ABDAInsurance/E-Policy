@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="EndorsementAttachmentReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EndorsementAttachmentReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EndorsementAttachmentReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EndorsementReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RequestUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EndorsementReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EndorsementReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PremiumNoteReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="IsManualSignature" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PremiumNoteReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PremiumNoteReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PremiumNoteV2Report">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="DestinationFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RPTFile" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PremiumNoteV2ReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PremiumNoteV2ReportResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CoinsuranceFollowerPremiumNoteReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RequestUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CoinsuranceFollowerPremiumNoteReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CoinsuranceFollowerPremiumNoteReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CommissionNoteReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="IsManualSignature" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CommissionNoteReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CommissionNoteReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CoinsuranceFollowerCommissionNoteReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RequestUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CoinsuranceFollowerCommissionNoteReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CoinsuranceFollowerCommissionNoteReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FacultativeReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RequestUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FacultativeReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FacultativeReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EndorsementFacultativeReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RequestUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EndorsementFacultativeReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EndorsementFacultativeReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancellationFacultativeReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RequestUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancellationFacultativeReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CancellationFacultativeReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

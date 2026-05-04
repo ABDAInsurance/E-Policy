@@ -53,12 +53,30 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="PolicyCustomCertificate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ReportName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyCustomCertificateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PolicyCustomCertificateResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="PolicyCertificateV2Report">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="Ano" type="xs:int" />
-        <xs:element minOccurs="0" name="DestinationFileName" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="RPTFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="DestinationFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RPTFile" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -113,9 +113,57 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\PSReportService\Build.disco" />
+    <None Include="Connected Services\NonPSReportService\Build.wsdl" />
+    <None Include="Connected Services\NonPSReportService\Build.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\NonPSReportService\Build1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.CancellationFacultativeReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.CoinsuranceFollowerCommissionNoteReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.CoinsuranceFollowerPremiumNoteReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.CommissionNoteReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.EndorsementAttachmentReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.EndorsementFacultativeReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.EndorsementReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.FacultativeReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.PremiumNoteReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\PSReportService\Build1.wsdl" />
+    <None Include="Connected Services\PSReportService\Build2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PSReportService\Build21.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\PSReportService\configuration91.svcinfo" />
     <None Include="Connected Services\PSReportService\configuration.svcinfo" />
+    <None Include="Connected Services\PSReportService\Build1.disco" />
+    <None Include="Connected Services\NonPSReportService\Build.disco" />
+    <None Include="Connected Services\NonPSReportService\configuration91.svcinfo" />
+    <None Include="Connected Services\NonPSReportService\configuration.svcinfo" />
+    <None Include="Connected Services\NonPSReportService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Connected Services\PSReportService\E_Policy.PSReportService.PolicyCertificateReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -123,6 +171,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Connected Services\PSReportService\E_Policy.PSReportService.PolicyScheduleReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PSReportService\E_Policy.PSReportService.PolicyCustomCertificateResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\PSReportService\Reference.svcmap">
@@ -135,6 +186,11 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AuthorizationValidation.cs" />
+    <Compile Include="Connected Services\NonPSReportService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\PSReportService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -160,13 +216,6 @@
     <Content Include="DirectAPI.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Connected Services\PSReportService\Build.wsdl" />
-    <None Include="Connected Services\PSReportService\Build.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PSReportService\Build1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <Content Include="PartnerSetup.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -185,6 +234,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\NonPSReportService\" />
     <WCFMetadataStorage Include="Connected Services\PSReportService\" />
   </ItemGroup>
   <PropertyGroup>

@@ -14,6 +14,7 @@ namespace E_Policy.Models
     {
         protected SQLDatabase _SQLDatabase;
         protected PSReportService.BuildClient _PSReportService;
+        protected NonPSReportService.BuildClient _NonPSReportService;
 
         protected string _ApplicationPath = ConfigurationManager.AppSettings["ApplicationPath"];
         string connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
@@ -22,6 +23,7 @@ namespace E_Policy.Models
         {
             _SQLDatabase = new SQLDatabase(connectionString);
             _PSReportService = new PSReportService.BuildClient();
+            _NonPSReportService = new NonPSReportService.BuildClient();
         }
 
         public DirectApiDao IsDirectAPI(string toc)

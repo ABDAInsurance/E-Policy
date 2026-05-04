@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="7Dmv+TegG9N9vxz8cXPNHo3g7cySbblXKWrMiQ32ayo=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="nYx1G/4CShIWKLfr48YoAjfuaThWBi97xBkeXd9zlK8=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IBuild">
+    <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IBuild2">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_IBuild</serializedValue>
+          <serializedValue>BasicHttpBinding_IBuild2</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -221,10 +221,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IBuild" contract="PSReportService.IBuild" bindingType="basicHttpBinding" address="http://192.168.193.127:8080/PolicySignatureSystem/PSReportBuilder/Build.svc" bindingConfiguration="BasicHttpBinding_IBuild">
+    <endpoint name="BasicHttpBinding_IBuild2" contract="NonPSReportService.IBuild" bindingType="basicHttpBinding" address="http://192.168.193.127:8080/PolicySignatureSystem/NonPSReportBuilder/Build.svc" bindingConfiguration="BasicHttpBinding_IBuild2">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://192.168.193.127:8080/PolicySignatureSystem/PSReportBuilder/Build.svc</serializedValue>
+          <serializedValue>http://192.168.193.127:8080/PolicySignatureSystem/NonPSReportBuilder/Build.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -233,10 +233,10 @@
           <serializedValue>basicHttpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_IBuild</serializedValue>
+          <serializedValue>BasicHttpBinding_IBuild2</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>PSReportService.IBuild</serializedValue>
+          <serializedValue>NonPSReportService.IBuild</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -296,7 +296,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_IBuild</serializedValue>
+          <serializedValue>BasicHttpBinding_IBuild2</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -306,10 +306,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="BasicHttpsBinding_IBuild" contract="PSReportService.IBuild" bindingType="basicHttpBinding" address="https://svwebserv127.oona-insurance.co.id/PolicySignatureSystem/PSReportBuilder/Build.svc" bindingConfiguration="BasicHttpsBinding_IBuild">
+    <endpoint name="BasicHttpsBinding_IBuild" contract="NonPSReportService.IBuild" bindingType="basicHttpBinding" address="https://svwebserv127.oona-insurance.co.id/PolicySignatureSystem/NonPSReportBuilder/Build.svc" bindingConfiguration="BasicHttpsBinding_IBuild">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://svwebserv127.oona-insurance.co.id/PolicySignatureSystem/PSReportBuilder/Build.svc</serializedValue>
+          <serializedValue>https://svwebserv127.oona-insurance.co.id/PolicySignatureSystem/NonPSReportBuilder/Build.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -321,7 +321,7 @@
           <serializedValue>BasicHttpsBinding_IBuild</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>PSReportService.IBuild</serializedValue>
+          <serializedValue>NonPSReportService.IBuild</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>

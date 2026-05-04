@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Build" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpsBinding_IBuild_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://192.168.193.127:8080/PolicySignatureSystem/NonPSReportBuilder/Build.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://192.168.193.127:8080/PolicySignatureSystem/NonPSReportBuilder/Build.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IBuild_EndorsementAttachmentReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:EndorsementAttachmentReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_EndorsementAttachmentReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EndorsementAttachmentReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_EndorsementReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:EndorsementReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_EndorsementReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EndorsementReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_PremiumNoteReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:PremiumNoteReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_PremiumNoteReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PremiumNoteReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_PremiumNoteV2Report_InputMessage">
+    <wsdl:part name="parameters" element="tns:PremiumNoteV2Report" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_PremiumNoteV2Report_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PremiumNoteV2ReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_CoinsuranceFollowerPremiumNoteReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:CoinsuranceFollowerPremiumNoteReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_CoinsuranceFollowerPremiumNoteReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CoinsuranceFollowerPremiumNoteReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_CommissionNoteReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:CommissionNoteReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_CommissionNoteReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CommissionNoteReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_CoinsuranceFollowerCommissionNoteReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:CoinsuranceFollowerCommissionNoteReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_CoinsuranceFollowerCommissionNoteReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CoinsuranceFollowerCommissionNoteReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_FacultativeReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:FacultativeReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_FacultativeReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FacultativeReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_EndorsementFacultativeReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:EndorsementFacultativeReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_EndorsementFacultativeReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EndorsementFacultativeReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_CancellationFacultativeReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancellationFacultativeReport" />
+  </wsdl:message>
+  <wsdl:message name="IBuild_CancellationFacultativeReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancellationFacultativeReportResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IBuild">
+    <wsdl:operation name="EndorsementAttachmentReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/EndorsementAttachmentReport" message="tns:IBuild_EndorsementAttachmentReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/EndorsementAttachmentReportResponse" message="tns:IBuild_EndorsementAttachmentReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EndorsementReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/EndorsementReport" message="tns:IBuild_EndorsementReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/EndorsementReportResponse" message="tns:IBuild_EndorsementReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PremiumNoteReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/PremiumNoteReport" message="tns:IBuild_PremiumNoteReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/PremiumNoteReportResponse" message="tns:IBuild_PremiumNoteReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PremiumNoteV2Report">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/PremiumNoteV2Report" message="tns:IBuild_PremiumNoteV2Report_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/PremiumNoteV2ReportResponse" message="tns:IBuild_PremiumNoteV2Report_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CoinsuranceFollowerPremiumNoteReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/CoinsuranceFollowerPremiumNoteReport" message="tns:IBuild_CoinsuranceFollowerPremiumNoteReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/CoinsuranceFollowerPremiumNoteReportResponse" message="tns:IBuild_CoinsuranceFollowerPremiumNoteReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CommissionNoteReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/CommissionNoteReport" message="tns:IBuild_CommissionNoteReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/CommissionNoteReportResponse" message="tns:IBuild_CommissionNoteReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CoinsuranceFollowerCommissionNoteReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/CoinsuranceFollowerCommissionNoteReport" message="tns:IBuild_CoinsuranceFollowerCommissionNoteReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/CoinsuranceFollowerCommissionNoteReportResponse" message="tns:IBuild_CoinsuranceFollowerCommissionNoteReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FacultativeReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/FacultativeReport" message="tns:IBuild_FacultativeReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/FacultativeReportResponse" message="tns:IBuild_FacultativeReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EndorsementFacultativeReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/EndorsementFacultativeReport" message="tns:IBuild_EndorsementFacultativeReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/EndorsementFacultativeReportResponse" message="tns:IBuild_EndorsementFacultativeReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancellationFacultativeReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBuild/CancellationFacultativeReport" message="tns:IBuild_CancellationFacultativeReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBuild/CancellationFacultativeReportResponse" message="tns:IBuild_CancellationFacultativeReport_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IBuild" type="tns:IBuild">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EndorsementAttachmentReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/EndorsementAttachmentReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EndorsementReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/EndorsementReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PremiumNoteReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/PremiumNoteReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PremiumNoteV2Report">
+      <soap:operation soapAction="http://tempuri.org/IBuild/PremiumNoteV2Report" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CoinsuranceFollowerPremiumNoteReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/CoinsuranceFollowerPremiumNoteReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CommissionNoteReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/CommissionNoteReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CoinsuranceFollowerCommissionNoteReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/CoinsuranceFollowerCommissionNoteReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FacultativeReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/FacultativeReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EndorsementFacultativeReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/EndorsementFacultativeReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancellationFacultativeReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/CancellationFacultativeReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpsBinding_IBuild" type="tns:IBuild">
+    <wsp:PolicyReference URI="#BasicHttpsBinding_IBuild_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EndorsementAttachmentReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/EndorsementAttachmentReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EndorsementReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/EndorsementReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PremiumNoteReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/PremiumNoteReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PremiumNoteV2Report">
+      <soap:operation soapAction="http://tempuri.org/IBuild/PremiumNoteV2Report" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CoinsuranceFollowerPremiumNoteReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/CoinsuranceFollowerPremiumNoteReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CommissionNoteReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/CommissionNoteReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CoinsuranceFollowerCommissionNoteReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/CoinsuranceFollowerCommissionNoteReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FacultativeReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/FacultativeReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EndorsementFacultativeReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/EndorsementFacultativeReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancellationFacultativeReport">
+      <soap:operation soapAction="http://tempuri.org/IBuild/CancellationFacultativeReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Build">
+    <wsdl:port name="BasicHttpBinding_IBuild" binding="tns:BasicHttpBinding_IBuild">
+      <soap:address location="http://192.168.193.127:8080/PolicySignatureSystem/NonPSReportBuilder/Build.svc" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpsBinding_IBuild" binding="tns:BasicHttpsBinding_IBuild">
+      <soap:address location="https://svwebserv127.oona-insurance.co.id/PolicySignatureSystem/NonPSReportBuilder/Build.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

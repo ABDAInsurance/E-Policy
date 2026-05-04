@@ -36,11 +36,18 @@ namespace E_Policy.PSReportService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBuild/PolicyCertificateReport", ReplyAction="http://tempuri.org/IBuild/PolicyCertificateReportResponse")]
         System.Threading.Tasks.Task<E_Policy.PSReportService.PolicyCertificateReportResponse> PolicyCertificateReportAsync(E_Policy.PSReportService.PolicyCertificateReportRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBuild/PolicyCertificateV2Report", ReplyAction="http://tempuri.org/IBuild/PolicyCertificateV2ReportResponse")]
-        string PolicyCertificateV2Report(int Ano, string DestinationFileName, string RPTFileName);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBuild/PolicyCustomCertificate", ReplyAction="http://tempuri.org/IBuild/PolicyCustomCertificateResponse")]
+        E_Policy.PSReportService.PolicyCustomCertificateResponse PolicyCustomCertificate(E_Policy.PSReportService.PolicyCustomCertificateRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBuild/PolicyCustomCertificate", ReplyAction="http://tempuri.org/IBuild/PolicyCustomCertificateResponse")]
+        System.Threading.Tasks.Task<E_Policy.PSReportService.PolicyCustomCertificateResponse> PolicyCustomCertificateAsync(E_Policy.PSReportService.PolicyCustomCertificateRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBuild/PolicyCertificateV2Report", ReplyAction="http://tempuri.org/IBuild/PolicyCertificateV2ReportResponse")]
-        System.Threading.Tasks.Task<string> PolicyCertificateV2ReportAsync(int Ano, string DestinationFileName, string RPTFileName);
+        string PolicyCertificateV2Report(int Ano, string DestinationFile, string RPTFile);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBuild/PolicyCertificateV2Report", ReplyAction="http://tempuri.org/IBuild/PolicyCertificateV2ReportResponse")]
+        System.Threading.Tasks.Task<string> PolicyCertificateV2ReportAsync(int Ano, string DestinationFile, string RPTFile);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -183,6 +190,54 @@ namespace E_Policy.PSReportService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PolicyCustomCertificate", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class PolicyCustomCertificateRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public int Ano;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public string OutputFileName;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        public string ReportName;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=3)]
+        public string ErrorMessage;
+        
+        public PolicyCustomCertificateRequest() {
+        }
+        
+        public PolicyCustomCertificateRequest(int Ano, string OutputFileName, string ReportName, string ErrorMessage) {
+            this.Ano = Ano;
+            this.OutputFileName = OutputFileName;
+            this.ReportName = ReportName;
+            this.ErrorMessage = ErrorMessage;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PolicyCustomCertificateResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class PolicyCustomCertificateResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string PolicyCustomCertificateResult;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public string ErrorMessage;
+        
+        public PolicyCustomCertificateResponse() {
+        }
+        
+        public PolicyCustomCertificateResponse(string PolicyCustomCertificateResult, string ErrorMessage) {
+            this.PolicyCustomCertificateResult = PolicyCustomCertificateResult;
+            this.ErrorMessage = ErrorMessage;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IBuildChannel : E_Policy.PSReportService.IBuild, System.ServiceModel.IClientChannel {
     }
@@ -269,12 +324,32 @@ namespace E_Policy.PSReportService {
             return base.Channel.PolicyCertificateReportAsync(request);
         }
         
-        public string PolicyCertificateV2Report(int Ano, string DestinationFileName, string RPTFileName) {
-            return base.Channel.PolicyCertificateV2Report(Ano, DestinationFileName, RPTFileName);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        E_Policy.PSReportService.PolicyCustomCertificateResponse E_Policy.PSReportService.IBuild.PolicyCustomCertificate(E_Policy.PSReportService.PolicyCustomCertificateRequest request) {
+            return base.Channel.PolicyCustomCertificate(request);
         }
         
-        public System.Threading.Tasks.Task<string> PolicyCertificateV2ReportAsync(int Ano, string DestinationFileName, string RPTFileName) {
-            return base.Channel.PolicyCertificateV2ReportAsync(Ano, DestinationFileName, RPTFileName);
+        public string PolicyCustomCertificate(int Ano, string OutputFileName, string ReportName, ref string ErrorMessage) {
+            E_Policy.PSReportService.PolicyCustomCertificateRequest inValue = new E_Policy.PSReportService.PolicyCustomCertificateRequest();
+            inValue.Ano = Ano;
+            inValue.OutputFileName = OutputFileName;
+            inValue.ReportName = ReportName;
+            inValue.ErrorMessage = ErrorMessage;
+            E_Policy.PSReportService.PolicyCustomCertificateResponse retVal = ((E_Policy.PSReportService.IBuild)(this)).PolicyCustomCertificate(inValue);
+            ErrorMessage = retVal.ErrorMessage;
+            return retVal.PolicyCustomCertificateResult;
+        }
+        
+        public System.Threading.Tasks.Task<E_Policy.PSReportService.PolicyCustomCertificateResponse> PolicyCustomCertificateAsync(E_Policy.PSReportService.PolicyCustomCertificateRequest request) {
+            return base.Channel.PolicyCustomCertificateAsync(request);
+        }
+        
+        public string PolicyCertificateV2Report(int Ano, string DestinationFile, string RPTFile) {
+            return base.Channel.PolicyCertificateV2Report(Ano, DestinationFile, RPTFile);
+        }
+        
+        public System.Threading.Tasks.Task<string> PolicyCertificateV2ReportAsync(int Ano, string DestinationFile, string RPTFile) {
+            return base.Channel.PolicyCertificateV2ReportAsync(Ano, DestinationFile, RPTFile);
         }
     }
 }
