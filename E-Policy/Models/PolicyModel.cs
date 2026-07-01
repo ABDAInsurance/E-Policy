@@ -12,6 +12,13 @@ namespace E_Policy.Models
 {
     public class PolicyModel : BaseModel
     {
+        RequestModel requestModel;
+
+        public PolicyModel()
+        {
+            requestModel = new RequestModel();
+        }
+
         private void GeneratePolicyScheduleByCare(int ano, string destinationFile, string rptFile)
         {
             try
@@ -117,12 +124,12 @@ namespace E_Policy.Models
             }
         }
 
-        public object GetPolicy(Dictionary<string, object> request)
+        public void GetPolicy(Dictionary<string, object> request)
         {
-            object data;
-
             try
             {
+                requestModel.ValidateDataRequest(request);
+
                 string query = @"SELECT
                                  A.Ano
                                 ,A.RegNo As RegisterNo
@@ -131,9 +138,7 @@ namespace E_Policy.Models
                                 ,A.TOC As TOCCode
                                 ,(SELECT Description + ' (' + TOC + ')' FROM TOC WITH(NOLOCK) WHERE TOC = A.TOC) As TOC
                                 ,A.AId As InsuredId
-                                ,(SELECT Name + ' (' + Id + ')' FROM Profile WITH(NOLOCK) WHERE Id = A.AId) As InsuredName
-                                ,A.Source As SOBId
-                                ,(SELECT Name + ' (' + Id + ')' FROM Profile WITH(NOLOCK) WHERE Id = A.Source) As SOB
+                                ,A.Source As SourceId
                                 ,B.PolicyType
                                 ,A.AStatus As PolicyStatusCode
                                 ,(CASE A.AStatus
@@ -169,57 +174,47 @@ namespace E_Policy.Models
                 }
                 else
                 {
-                    DirectApiDao directApiDao = IsDirectAPI(dataTable.Rows[0]["TOCCode"].ToString());
+                    if(dataTable.Rows.Count > 30)
+                    {
+                        MessageException.NoLogMessageException("Maximum of 30 Policies Per Request!");
+                    }
 
-                    dataTable.Columns.Add("PartnerCode", typeof(string));
-                    dataTable.Columns.Add("PartnerName", typeof(string));
-                    dataTable.Columns.Add("ApiUrl", typeof(string));
-                    dataTable.Columns.Add("IsTemplate", typeof(bool));
-                    dataTable.Columns.Add("UserId", typeof(string));
+                    DataRow drPolicy = dataTable.Rows[0];
+                    ApiSetupDao ApiSetupDao = GetApiSetup(drPolicy["TOCCode"].ToString());
 
-                    if (directApiDao == null)
+                    if (ApiSetupDao == null)
                     {
                         if (string.IsNullOrEmpty(request["StartCertificateNo"].ToString()) || string.IsNullOrEmpty(request["EndCertificateNo"].ToString()))
                         {
                             MessageException.NoLogMessageException("Certificate Number is Required !");
                         }
 
-                        PartnerDao partnerDao = GetPartnerSetup(dataTable.Rows[0]["TOCCode"].ToString(),
-                                                                dataTable.Rows[0]["InsuredId"].ToString(),
-                                                                dataTable.Rows[0]["SOBId"].ToString(),
-                                                                dataTable.Rows[0]["PolicyType"].ToString());
+                        DataRow drPartner = GetPartnerSetup(dataTable.Rows[0]["TOCCode"].ToString(),
+                                                            dataTable.Rows[0]["InsuredId"].ToString(),
+                                                            dataTable.Rows[0]["SourceId"].ToString());
 
-                        foreach (DataRow dataRow in dataTable.Rows)
-                        {
-                            dataRow["PartnerCode"] = partnerDao.Code;
-                            dataRow["PartnerName"] = partnerDao.Name;
-                            dataRow["ApiUrl"] = string.Empty;
-                            dataRow["IsTemplate"] = true;
-                            if (partnerDao.Code == "Default") dataRow["IsTemplate"] = false;
-                            dataRow["UserId"] = request["UserId"];
-                        }
+                        request.Add("ApiUrl", "");
+                        request.Add("IsCustomLayout", drPartner["IsCustomLayout"]);
+                        request.Add("IsCertificate", drPartner["IsCertificate"]);
+                        request.Add("TOC", drPartner["TOC"]);
+                        request.Add("CompanyCode", drPartner["CompanyCode"]);
                     }
                     else
                     {
-                        foreach (DataRow dataRow in dataTable.Rows)
-                        {
-                            dataRow["PartnerCode"] = string.Empty;
-                            dataRow["PartnerName"] = string.Empty;
-                            dataRow["ApiUrl"] = directApiDao.Url;
-                            dataRow["IsTemplate"] = true;
-                            dataRow["UserId"] = request["UserId"];
-                        }
+                        request.Add("ApiUrl", ApiSetupDao.Url);
+                        request.Add("IsCustomLayout", true);
+                        request.Add("IsCertificate", false);
+                        request.Add("TOC", drPolicy["TOCCode"]);
+                        request.Add("CompanyCode", "");
                     }
                 }
 
-                data = dataTable;
+                requestModel.SaveRequest(request, dataTable);
             }
             catch (Exception)
             {
                 throw;
             }
-
-            return data;
         }
 
         public string GenerateDocument(List<Dictionary<string, object>> requests)

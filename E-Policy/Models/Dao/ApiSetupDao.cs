@@ -2,7 +2,7 @@
 
 namespace E_Policy.Models.Dao
 {
-    public class DirectApiDao
+    public class ApiSetupDao
     {
         public string TOC { get; set; }
         public string Name { get; set; }

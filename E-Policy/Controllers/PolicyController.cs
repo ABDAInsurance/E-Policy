@@ -57,8 +57,8 @@ namespace E_Policy.Controllers
                     if (string.IsNullOrEmpty(request["EndCertificateNo"].ToString())) request.Remove("EndCertificateNo");
                 }
                 
-                object data = policyModel.GetPolicy(request);
-                return SuccessResponse(string.Empty, data);
+                policyModel.GetPolicy(request);
+                return SuccessResponse(string.Empty);
             }
             catch (Exception ex)
             {

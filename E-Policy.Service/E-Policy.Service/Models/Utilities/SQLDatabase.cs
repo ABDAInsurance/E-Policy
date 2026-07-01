@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace E_Policy.Models.Utilities
+namespace E_Policy.Service.Models.Utilities
 {
     public class SQLDatabase
     {

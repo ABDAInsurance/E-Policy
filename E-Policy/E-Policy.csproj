@@ -198,14 +198,16 @@
     </Compile>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
+    <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\Dao\DirectApiDao.cs" />
-    <Compile Include="Models\Dao\PartnerDao.cs" />
+    <Compile Include="Models\Dao\ApiSetupDao.cs" />
     <Compile Include="MessageException.cs" />
+    <Compile Include="Models\Constant\RequestStatus.cs" />
     <Compile Include="Models\PolicyModel.cs" />
+    <Compile Include="Models\RequestModel.cs" />
     <Compile Include="Models\Utilities\SQLDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -213,13 +215,10 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DirectAPI.json">
+    <Content Include="APISetup.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-    <Content Include="PartnerSetup.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

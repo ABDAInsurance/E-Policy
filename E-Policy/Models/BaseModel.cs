@@ -7,6 +7,7 @@ using System.IO.Compression;
 using Newtonsoft.Json;
 using E_Policy.Models.Dao;
 using E_Policy.Models.Utilities;
+using System.Data;
 
 namespace E_Policy.Models
 {
@@ -26,56 +27,62 @@ namespace E_Policy.Models
             _NonPSReportService = new NonPSReportService.BuildClient();
         }
 
-        public DirectApiDao IsDirectAPI(string toc)
+        public ApiSetupDao GetApiSetup(string toc)
         {
-            DirectApiDao directApiDao;
+            ApiSetupDao ApiSetupDao;
 
             try
             {
-                string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\DirectAPI.json";
+                string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\APISetup.json";
                 if (!File.Exists(filePath))
                 {
-                    MessageException.NoLogMessageException("DirectAPI.Json File Not Found !");
+                    MessageException.NoLogMessageException("APISetup.Json File Not Found !");
                 }
 
                 string jsonPayload = File.ReadAllText(filePath);
-                List<DirectApiDao> DirectApis = JsonConvert.DeserializeObject<List<DirectApiDao>>(jsonPayload);
-                directApiDao = DirectApis.Find(x => x.TOC == toc);
+                List<ApiSetupDao> DirectApis = JsonConvert.DeserializeObject<List<ApiSetupDao>>(jsonPayload);
+                ApiSetupDao = DirectApis.Find(x => x.TOC == toc);
             }
             catch (Exception)
             {
                 throw;
             }
 
-            return directApiDao;
+            return ApiSetupDao;
         }
 
-        public PartnerDao GetPartnerSetup(string toc, string insuredId, string sobId, string policyType)
+        public DataRow GetPartnerSetup(string toc, string insuredId, string sourceId)
         {
-            PartnerDao partnerDao;
+            DataRow result;
 
             try
             {
-                string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\PartnerSetup.json";
-                if (!File.Exists(filePath))
-                {
-                    MessageException.NoLogMessageException("PartnerSetup.Json File Not Found !");
-                }
+                string query = @"SELECT 
+                                  A.CompanyCode
+                                 ,A.CompanyName
+                                 ,A.IsCertificate
+                                 ,A.IsCustomLayout
+                                 ,B.TOC
+                                 ,B.DocumentType
+                                 FROM [epolicy].[msPartner] A WITH(NOLOCK)
+                                 INNER JOIN [epolicy].[ProductSetup] B WITH(NOLOCK)
+                                 ON A.CompanyCode = B.CompanyCode
+                                 WHERE B.TOC = '{0}' 
+                                 AND B.InsuredId = '{1}' 
+                                 AND B.SourceId = '{2}'";
 
-                string jsonPayload = File.ReadAllText(filePath);
-                List<PartnerDao> PartnerSetups = JsonConvert.DeserializeObject<List<PartnerDao>>(jsonPayload);
-                partnerDao = PartnerSetups.Find(x => x.TOC == toc & x.InsuredId == insuredId & x.SOBId == sobId & x.PolicyType == policyType);
-                if (partnerDao == null)
-                {
-                    partnerDao = new PartnerDao();
-                }
+                query = string.Format(query, toc, insuredId, sourceId);
+
+                DataTable dataTable = _SQLDatabase.ExecuteQuery(query, CommandType.Text);
+
+                result = dataTable.Rows[0];
             }
             catch (Exception)
             {
                 throw;
             }
 
-            return partnerDao;
+            return result;
         }
 
         public Dictionary<string, object> DownloadFile(string source)
