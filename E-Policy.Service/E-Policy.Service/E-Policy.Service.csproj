@@ -42,6 +42,14 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +60,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationConfiguration.cs" />
+    <Compile Include="Connected Services\CareWsCommon\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\NonPSReportService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\PSReportService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Jobs\BaseJob.cs" />
     <Compile Include="Jobs\GeneratePolicyDocumentJob.cs" />
     <Compile Include="MainService.cs">
@@ -62,16 +85,648 @@
     </Compile>
     <Compile Include="MessageLog.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\CareService.cs" />
+    <Compile Include="Models\Constant\RequestStatus.cs" />
     <Compile Include="Models\Utilities\SQLDatabase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.AssignTaskResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.CheckUserPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DeleteReportLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DoneTaskResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropCityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropClaimDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropClaimDocumentTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropClaimImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropCLCOSTDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropCLSubDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropCollateralDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropCollateralResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropCSDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropCSImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropDistrictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropFactDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropGenderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropGeneralDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropIDTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropLocationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropObjectRegisterDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropPAgencyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropPHolderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropPIncomeSourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropPolicyDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropPolicyDocumentTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropPolicyImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropProfileAliasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropProfileDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropProfileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropProfileVirtualAccountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropProvinceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropRDocListDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropRequestDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropServicingDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropServicingImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropSubDistrictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropSysProclibResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropTaskResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropVillageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.DropVoucherDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.EMailForgotPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetCityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetCollateralResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetDistrictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetErrorMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetGeneralDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListActionLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListClaimDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListClaimDocumentTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListClaimImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListCLCOSTDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListCLSUBDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListCollateralDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListCSDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListCSImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListDuplicateProfileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListFactDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListObjectRegisterDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListPAgencyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListPHolderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListPolicyDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListPolicyDocumentTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListPolicyImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListProfileDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListRequestDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListServicingDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListServicingImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetListVoucherDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetLocationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetPAgencyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetPHolderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetPickUpListNameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetPictureBinaryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetPictureImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetPolicyPrintLogDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetProfileAliasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetProfileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetProvinceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetRDocListDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetSubDistrictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetSysErrorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.GetVillageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Get_Exchange_RateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Get_Exchange_Rate_BIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Get_Exchange_Rate_From_ToResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Get_Exchange_Rate_From_To_BIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Get_Exchange_Rate_From_To_MandiriResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Get_Exchange_Rate_MandiriResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Get_Get_ValueidResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.HoldSysProclibResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Hold_ALBucketResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.LoadExchangeRateFromBIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.ReplyTaskResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.ReSubmitSysProclibResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Resume_ALBucketResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveCityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveClaimDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveClaimDocumentTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveClaimImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveCLCOSTDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveCLSUBDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveCollateralDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveCollateralResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveCSDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveCSImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveDataDownLoadImageToLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveDistrictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveErrorMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveFactDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveGenderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveGeneralDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveIDTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveLocationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveObjectRegisterDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SavePAgencyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SavePHolderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SavePictureImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SavePIncomeSourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SavePolicyDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SavePolicyDocumentTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SavePolicyImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SavePolicyPrintLogDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveProfileAliasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveProfileDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveProfileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveProfileVirtualAccountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveProvinceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveRDocListDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveRequestDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveServicingDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveServicingImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveSubDistrictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveToTXTFileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveVillageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SaveVoucherDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchCityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchCollateralResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchDistrictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchErrorMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchGenderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchGeneralDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchIDTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchLocationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchPIncomeSourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchProvinceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchSubDistrictResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SearchVillageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SendMessageViaHTTPResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.SendMessageViaURLResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.Suspend_ALBucketResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UnHold_ALBucketResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateClaimDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateClaimDocumentTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateClaimImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateCLCOSTDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateCLSUBDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateCollateralDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateCSDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateCSImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateFactDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateObjectRegisterDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdatePolicyDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdatePolicyDocumentTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdatePolicyImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateProfileDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateRDocListDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateReportLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateRequestDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateServicingDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateServicingImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\E_Policy.Service.CareWsCommon.UpdateVoucherDocumentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CareWsCommon\WSCommon1.wsdl" />
+    <None Include="Connected Services\NonPSReportService\Build.wsdl" />
+    <None Include="Connected Services\NonPSReportService\Build.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\NonPSReportService\Build1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.CancellationFacultativeReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.CoinsuranceFollowerCommissionNoteReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.CoinsuranceFollowerPremiumNoteReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.CommissionNoteReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.EndorsementAttachmentReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.EndorsementFacultativeReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.EndorsementReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.FacultativeReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NonPSReportService\E_Policy.Service.NonPSReportService.PremiumNoteReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PSReportService\Build.wsdl" />
+    <None Include="Connected Services\PSReportService\Build.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PSReportService\Build1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PSReportService\E_Policy.Service.PSReportService.PolicyCertificateReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PSReportService\E_Policy.Service.PSReportService.PolicyCustomCertificateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PSReportService\E_Policy.Service.PSReportService.PolicyScheduleAttacmentReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PSReportService\E_Policy.Service.PSReportService.PolicyScheduleReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\CareWsCommon\" />
+    <WCFMetadataStorage Include="Connected Services\NonPSReportService\" />
+    <WCFMetadataStorage Include="Connected Services\PSReportService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PSReportService\Build.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PSReportService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PSReportService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PSReportService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NonPSReportService\Build.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NonPSReportService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NonPSReportService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\NonPSReportService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CareWsCommon\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CareWsCommon\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CareWsCommon\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CareWsCommon\WSCommon1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

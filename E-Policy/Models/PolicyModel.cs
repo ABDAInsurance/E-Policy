@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
 using E_Policy.Models.Dao;
 
@@ -12,85 +10,158 @@ namespace E_Policy.Models
 {
     public class PolicyModel : BaseModel
     {
-        RequestModel requestModel;
-
-        public PolicyModel()
-        {
-            requestModel = new RequestModel();
-        }
-
-        private void GeneratePolicyScheduleByCare(int ano, string destinationFile, string rptFile)
+        public void ValidateRequest(Dictionary<string, object> request)
         {
             try
             {
-                string errorMessage = _PSReportService.PolicyCertificateV2Report(ano, destinationFile, rptFile);
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    throw new Exception(errorMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageException.NoLogMessageException(ex.Message);
-            }
-        }
+                string query = @"SELECT 
+                                 CreatedBy As UserId
+                                 FROM [EPolicy].[Request] WITH(NOLOCK)
+                                 WHERE Status <> 'S'
+                                 AND IsTax = '{0}'                                 
+                                 AND PolicyNo = '{1}'
+                                 AND StartCertificateNo = '{2}'
+                                 AND EndCertificateNo = '{3}'";
 
-        private void GeneratePremiumNoteByCare(int ano, string destinationFile, string rptFile)
-        {
-            try
-            {
-                string errorMessage = _NonPSReportService.PremiumNoteV2Report(ano, destinationFile, rptFile);
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    throw new Exception(errorMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageException.NoLogMessageException(ex.Message);
-            }
-        }
+                DataTable dataTable = _SQLDatabase.ExecuteQuery(string.Format(query, request["IsTax"], request["PolicyNo"], request["StartCertificateNo"], request["EndCertificateNo"]), CommandType.Text);
 
-        private void GenerateDocumentByApi(string apiUrl, string destinationFile)
-        {
-            try
-            {
-                using (HttpClient httpClient = new HttpClient())
+                if (dataTable.Rows.Count > 0)
                 {
-                    httpClient.BaseAddress = new Uri(apiUrl);
-                    httpClient.DefaultRequestHeaders.Accept.Clear();
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
-                    HttpResponseMessage httpResponseMessage = httpClient.GetAsync(apiUrl).Result;
-
-                    if (httpResponseMessage.IsSuccessStatusCode)
+                    if (request["UserId"].ToString() == dataTable.Rows[0]["UserId"].ToString())
                     {
-                        HttpContent httpContent = httpResponseMessage.Content;
-                        var contentStream = httpContent.ReadAsStreamAsync().Result; // get the actual content stream
-
-                        using (var fileStream = new FileStream(destinationFile, FileMode.CreateNew))
-                        {
-                            contentStream.CopyTo(fileStream);
-                        }
+                        MessageException.NoLogMessageException("Your Request is Being Processed !");
                     }
                     else
                     {
-                        MessageException.NoLogMessageException("Failed Policy Generated via API !");
+                        MessageException.NoLogMessageException(string.Format("Your Request is Being Processed By : {0} !", dataTable.Rows[0]["UserId"].ToString()));
                     }
                 }
+
+                query = @"SELECT 
+                          PolicyNo, StartCertificateNo, EndCertificateNo, Status
+                          FROM [EPolicy].[Request] WITH(NOLOCK)
+                          WHERE Status <> 'S'
+                          AND IsTax = '{0}'      
+                          AND CreatedBy = '{1}'";
+
+                dataTable = _SQLDatabase.ExecuteQuery(string.Format(query, request["IsTax"], request["UserId"]), CommandType.Text);
+
+                if (dataTable.Rows.Count > 8)
+                {
+                    MessageException.NoLogMessageException("Please Complete Your Request !");
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageException.NoLogMessageException(ex.Message);
+                throw;
             }
         }
 
-        private void SaveHistory(string policyNo, int totalDocument, string userId)
+        public void SaveRequest(Dictionary<string, object> request, DataTable dtPolicy)
         {
             try
             {
                 List<SqlParameter> sqlParameters = new List<SqlParameter>();
-                string query = "[Abda].[SpTriggerTable]";
 
+                DataRow drPolicyFirstRow = dtPolicy.Rows[0];
+                string documentNo = drPolicyFirstRow["PolicyNo"].ToString();
+                if (drPolicyFirstRow["PolicyStatus"].ToString() == "W") documentNo = drPolicyFirstRow["RegisterNo"].ToString();
+
+                //---Insert Table Request---
+                string query = @"INSERT [EPolicy].[Request]([ParentAno],[PolicyNo],[StartCertificateNo],[EndCertificateNo],[TOC],[CompanyCode],[DocumentType],[ApiUrl],[IsCertificate],[IsCustomLayout],[IsUploadToCare],[DownloadUrl],[IsTax],[FailedCount],[Status],[Message],[CreatedBy],[CreatedDate],[UpdatedBy],[UpdatedDate])
+                                 VALUES(@ParentAno,@PolicyNo,@StartCertificateNo,@EndCertificateNo,@TOC,@CompanyCode,@DocumentType,@ApiUrl,@IsCertificate,@IsCustomLayout,@IsUploadToCare,'',@IsTax,0,'P','',@UserId,@CurrentDate,@UserId,@CurrentDate)";
+
+                sqlParameters.Clear();
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@ParentAno",
+                    Value = Convert.ToInt32(dtPolicy.Rows[0]["ParentAno"])
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@PolicyNo",
+                    Value = documentNo
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@StartCertificateNo",
+                    Value = request["StartCertificateNo"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@EndCertificateNo",
+                    Value = request["EndCertificateNo"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@TOC",
+                    Value = drPolicyFirstRow["TOC"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@CompanyCode",
+                    Value = request["CompanyCode"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@DocumentType",
+                    Value = request["DocumentType"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@ApiUrl",
+                    Value = request["ApiUrl"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@IsCertificate",
+                    Value = request["IsCertificate"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@IsCustomLayout",
+                    Value = request["IsCustomLayout"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@IsUploadToCare",
+                    Value = request["IsUploadToCare"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@IsTax",
+                    Value = request["IsTax"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@UserId",
+                    Value = request["UserId"]
+                });
+
+                sqlParameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@CurrentDate",
+                    Value = DateTime.Now
+                });
+
+                int newId = _SQLDatabase.ExecuteNonQuery(query, CommandType.Text, true, sqlParameters);
+
+                //---Insert Table Request Detail---
+                query = "[SpTriggerTable]";
+
+                sqlParameters.Clear();
                 sqlParameters.Add(new SqlParameter()
                 {
                     ParameterName = "@triggerEvent",
@@ -102,23 +173,28 @@ namespace E_Policy.Models
                 {
                     ParameterName = "@tableName",
                     SqlDbType = SqlDbType.VarChar,
-                    Value = "[Abda].[epUserActivity]"
+                    Value = "[EPolicy].[RequestDetail]"
                 });
 
                 DataTable dataTable = _SQLDatabase.ExecuteQuery(query, CommandType.StoredProcedure, sqlParameters);
 
-                DataRow dataRow = dataTable.NewRow();
-                dataRow["PolicyNo"] = policyNo;
-                dataRow["TotalDocument"] = totalDocument;
-                dataRow["CreatedBy"] = userId;
-                dataRow["CreatedDate"] = DateTime.Now;
-                dataRow["UpdatedBy"] = userId;
-                dataRow["UpdatedDate"] = DateTime.Now;
-                dataTable.Rows.Add(dataRow);
+                foreach (DataRow drPolicy in dtPolicy.Rows)
+                {
+                    DataRow dataRow = dataTable.NewRow();
+                    dataRow["HeaderId"] = newId;
+                    dataRow["Ano"] = drPolicy["Ano"];
+                    dataRow["PolicyNo"] = documentNo;
+                    if (Convert.ToInt32(drPolicy["LAno"]) > 0) dataRow["PolicyNo"] = string.Format("{0}-{1}", documentNo, drPolicy["CertificateNo"]);
+                    dataRow["CreatedBy"] = request["UserId"];
+                    dataRow["CreatedDate"] = DateTime.Now;
+                    dataRow["UpdatedBy"] = request["UserId"];
+                    dataRow["UpdatedDate"] = DateTime.Now;
+                    dataTable.Rows.Add(dataRow);
+                }
 
-                _SQLDatabase.TransferToDataBase(dataTable, "[Abda].[epUserActivity]");
+                _SQLDatabase.TransferToDataBase(dataTable, "[EPolicy].[RequestDetail]");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -128,40 +204,37 @@ namespace E_Policy.Models
         {
             try
             {
-                requestModel.ValidateDataRequest(request);
+                ValidateRequest(request);
 
                 string query = @"SELECT
                                  A.Ano
+                                ,A.LAno                                
+                                ,(CASE WHEN A.LAno = -1 THEN A.Ano ELSE A.LAno END) As ParentAno
                                 ,A.RegNo As RegisterNo
                                 ,A.PolicyNo
                                 ,A.CertificateNo
-                                ,A.TOC As TOCCode
-                                ,(SELECT Description + ' (' + TOC + ')' FROM TOC WITH(NOLOCK) WHERE TOC = A.TOC) As TOC
+                                ,A.TOC
                                 ,A.AId As InsuredId
                                 ,A.Source As SourceId
                                 ,B.PolicyType
-                                ,A.AStatus As PolicyStatusCode
-                                ,(CASE A.AStatus
-                                    WHEN 'W' THEN 'Waiting'
-                                    WHEN 'I' THEN 'Inforce'
-                                    ELSE '-' END) PolicyStatus
+                                ,A.AType As PolicyStatusType                                
+                                ,A.AStatus As PolicyStatus
                                 FROM ACCEPTANCE A WITH(NOLOCK)
                                 INNER JOIN Cover B WITH(NOLOCK)
                                 ON A.Cno = B.Cno
-                                WHERE A.AStatus IN ('W', 'I')
+                                WHERE A.AType <> 'C' 
+                                AND A.AStatus IN ('W', 'I')
                                 AND (A.RegNo = '{0}' OR A.PolicyNo = '{0}')";
 
-                if(request.ContainsKey("StartCertificateNo") || request.ContainsKey("EndCertificateNo"))
+                if (!string.IsNullOrEmpty(request["StartCertificateNo"].ToString()) || !string.IsNullOrEmpty(request["EndCertificateNo"].ToString()))
                 {
-                    if(request["StartCertificateNo"].ToString().Length < 6 || request["EndCertificateNo"].ToString().Length < 6) MessageException.NoLogMessageException("Certificate Number Must be 6 (Six) Characters !");
+                    if (request["StartCertificateNo"].ToString().Length < 6 || request["EndCertificateNo"].ToString().Length < 6) MessageException.NoLogMessageException("Certificate Number Must be 6 (Six) Characters !");
                     if (request["StartCertificateNo"].ToString().Length > 6 || request["EndCertificateNo"].ToString().Length > 6) MessageException.NoLogMessageException("Certificate Number Must be 6 (Six) Characters !");
                     query += " AND A.CertificateNo BETWEEN '{1}' AND '{2}'";
                 }
                 else
                 {
                     query += " AND (A.Ano = A.LAno OR A.LAno = -1)";
-                    request.Add("StartCertificateNo", "");
-                    request.Add("EndCertificateNo", "");
                 }
 
                 query += " ORDER BY A.Ano";
@@ -174,47 +247,128 @@ namespace E_Policy.Models
                 }
                 else
                 {
-                    if(dataTable.Rows.Count > 30)
+                    DataRow drPolicy = dataTable.Rows[0];
+
+                    if (dataTable.Rows.Count > 30)
                     {
                         MessageException.NoLogMessageException("Maximum of 30 Policies Per Request!");
                     }
 
-                    DataRow drPolicy = dataTable.Rows[0];
-                    ApiSetupDao ApiSetupDao = GetApiSetup(drPolicy["TOCCode"].ToString());
-
-                    if (ApiSetupDao == null)
+                    if (Convert.ToBoolean(request["IsTax"]))
                     {
-                        if (string.IsNullOrEmpty(request["StartCertificateNo"].ToString()) || string.IsNullOrEmpty(request["EndCertificateNo"].ToString()))
+                        if (Convert.ToInt32(drPolicy["LAno"]) != -1)
                         {
-                            MessageException.NoLogMessageException("Certificate Number is Required !");
+                            if (string.IsNullOrEmpty(request["StartCertificateNo"].ToString()) || string.IsNullOrEmpty(request["EndCertificateNo"].ToString()))
+                            {
+                                MessageException.NoLogMessageException("Certificate Number is Required !");
+                            }
                         }
 
-                        DataRow drPartner = GetPartnerSetup(dataTable.Rows[0]["TOCCode"].ToString(),
-                                                            dataTable.Rows[0]["InsuredId"].ToString(),
-                                                            dataTable.Rows[0]["SourceId"].ToString());
-
                         request.Add("ApiUrl", "");
-                        request.Add("IsCustomLayout", drPartner["IsCustomLayout"]);
-                        request.Add("IsCertificate", drPartner["IsCertificate"]);
-                        request.Add("TOC", drPartner["TOC"]);
-                        request.Add("CompanyCode", drPartner["CompanyCode"]);
+                        request.Add("IsCertificate", true);
+                        request.Add("IsCustomLayout", true);
+                        request.Add("CompanyCode", "");
+
+                        if (string.IsNullOrEmpty(request["StartCertificateNo"].ToString()) || string.IsNullOrEmpty(request["EndCertificateNo"].ToString()))
+                        {
+                            request["IsCertificate"] = false;
+                        }
                     }
                     else
                     {
-                        request.Add("ApiUrl", ApiSetupDao.Url);
-                        request.Add("IsCustomLayout", true);
-                        request.Add("IsCertificate", false);
-                        request.Add("TOC", drPolicy["TOCCode"]);
-                        request.Add("CompanyCode", "");
+                        ApiSetupDao ApiSetupDao = GetApiSetup(drPolicy["TOC"].ToString());
+
+                        if (ApiSetupDao == null)
+                        {
+                            if (Convert.ToInt32(drPolicy["LAno"]) != -1)
+                            {
+                                if (string.IsNullOrEmpty(request["StartCertificateNo"].ToString()) || string.IsNullOrEmpty(request["EndCertificateNo"].ToString()))
+                                {
+                                    MessageException.NoLogMessageException("Certificate Number is Required !");
+                                }
+                            }
+
+                            DataRow drPartner = GetPartnerSetup(request["DocumentType"].ToString(),
+                                                                drPolicy["TOC"].ToString(),
+                                                                drPolicy["SourceId"].ToString(),
+                                                                drPolicy["InsuredId"].ToString());
+
+                            request.Add("ApiUrl", "");
+                            request.Add("IsCertificate", drPartner["IsCertificate"]);
+                            request.Add("IsCustomLayout", true);
+                            request.Add("CompanyCode", drPartner["CompanyCode"]);
+                        }
+                        else
+                        {
+                            if (request["DocumentType"].ToString() != "ALL" && request["DocumentType"].ToString() != "PS") MessageException.NoLogMessageException("This Policy Support Policy Schedule Only !");
+
+                            request.Add("ApiUrl", ApiSetupDao.Url);
+                            request.Add("IsCertificate", false);
+                            request.Add("IsCustomLayout", true);
+                            request.Add("CompanyCode", "");
+                        }
                     }
                 }
 
-                requestModel.SaveRequest(request, dataTable);
+                SaveRequest(request, dataTable);
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        public object GetRequest(Dictionary<string, object> request)
+        {
+            object data;
+
+            try
+            {
+                string query = @"SELECT
+                                *
+                                FROM 
+                                (
+                                    SELECT
+                                     Id                                 
+                                    ,PolicyNo
+                                    ,StartCertificateNo
+                                    ,EndCertificateNo
+                                    ,DownloadUrl
+                                    ,Status
+                                    ,Message
+                                    ,CreatedDate
+                                    FROM [EPolicy].[Request] A WITH(NOLOCK)
+                                    WHERE Status <> 'S'
+                                    AND IsTax = '{0}'      
+                                    AND CreatedBy = '{1}'
+                                    UNION
+                                    SELECT
+                                     Id                                 
+                                    ,PolicyNo
+                                    ,StartCertificateNo
+                                    ,EndCertificateNo
+                                    ,DownloadUrl
+                                    ,Status
+                                    ,Message
+                                    ,CreatedDate
+                                    FROM [EPolicy].[Request] A WITH(NOLOCK)
+                                    WHERE Status = 'S'
+                                    AND IsTax = '{0}'      
+                                    AND CreatedBy = '{1}'
+                                    AND UpdatedDate >= DATEADD(hour, -24, GETDATE())
+                                ) As A
+                                ORDER BY CreatedDate DESC";
+
+                DataTable dataTable = _SQLDatabase.ExecuteQuery(string.Format(query, request["IsTax"], request["UserId"]), CommandType.Text);
+
+                data = dataTable;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return data;
         }
 
         public string GenerateDocument(List<Dictionary<string, object>> requests)
@@ -244,16 +398,7 @@ namespace E_Policy.Models
 
                     foreach (Dictionary<string, object> request in requests)
                     {
-                        //---Generate PS---
-                        rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", _ApplicationPath, firstRequest["PartnerCode"], "PC", firstRequest["TOCCode"]);
-                        if (firstRequest["PartnerCode"].ToString() == "Default") rptFile = string.Format(@"{0}\RPT\{1}\{2}.rpt", _ApplicationPath, firstRequest["PartnerCode"].ToString(), "PC");
-                        fileName = string.Format("{0}-{1} (PC).pdf", documentNo, request["CertificateNo"]);
-                        GeneratePolicyScheduleByCare(Convert.ToInt32(request["Ano"]), destinationPath + "\\" + fileName, rptFile);
-
-                        //---Generate PN---
-                        rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", _ApplicationPath, firstRequest["PartnerCode"], "PN", firstRequest["TOCCode"]);
-                        fileName = string.Format("{0}-{1} (PN).pdf", documentNo, request["CertificateNo"]);
-                        if (File.Exists(rptFile)) GeneratePremiumNoteByCare(Convert.ToInt32(request["Ano"]), destinationPath + "\\" + fileName, rptFile);
+                        
                     }
                 }
                 else
@@ -262,11 +407,9 @@ namespace E_Policy.Models
                     {
                         string apiUrl = string.Format("{0}?PolicyNo={1}", firstRequest["ApiUrl"], documentNo);
                         string fileName = string.Format("{0} (PC).pdf", documentNo);
-                        GenerateDocumentByApi(apiUrl, destinationPath + "\\" + fileName);
+                        //GenerateDocumentByApi(apiUrl, destinationPath + "\\" + fileName);
                     }
                 }
-
-                SaveHistory(documentNo, requests.Count, firstRequest["UserId"].ToString());
             }
             catch (Exception)
             {

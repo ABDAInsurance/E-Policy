@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="PolicyScheduleAttacmentReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyScheduleAttacmentReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PolicyScheduleAttacmentReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyScheduleReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="IsManualSignature" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyScheduleReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PolicyScheduleReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyCertificateReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RequestUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyCertificateReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PolicyCertificateReportResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyCustomCertificate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="OutputFileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ReportName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyCustomCertificateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PolicyCustomCertificateResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyScheduleV2Report">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="DestinationFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RPTFile" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyScheduleV2ReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PolicyScheduleV2ReportResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyCertificateV2Report">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Ano" type="xs:int" />
+        <xs:element minOccurs="0" name="DestinationFile" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RPTFile" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PolicyCertificateV2ReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PolicyCertificateV2ReportResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
-using System.IO.Compression;
 
 using Newtonsoft.Json;
 using E_Policy.Models.Dao;
 using E_Policy.Models.Utilities;
-using System.Data;
+using System.Linq;
 
 namespace E_Policy.Models
 {
     public class BaseModel
     {
         protected SQLDatabase _SQLDatabase;
-        protected PSReportService.BuildClient _PSReportService;
-        protected NonPSReportService.BuildClient _NonPSReportService;
 
         protected string _ApplicationPath = ConfigurationManager.AppSettings["ApplicationPath"];
         string connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
@@ -23,8 +21,6 @@ namespace E_Policy.Models
         public BaseModel()
         {
             _SQLDatabase = new SQLDatabase(connectionString);
-            _PSReportService = new PSReportService.BuildClient();
-            _NonPSReportService = new NonPSReportService.BuildClient();
         }
 
         public ApiSetupDao GetApiSetup(string toc)
@@ -51,30 +47,66 @@ namespace E_Policy.Models
             return ApiSetupDao;
         }
 
-        public DataRow GetPartnerSetup(string toc, string insuredId, string sourceId)
+        public DataRow GetPartnerSetup(string documentType, string toc, string sourceId, string insuredId)
         {
             DataRow result;
-
+            
             try
             {
                 string query = @"SELECT 
-                                  A.CompanyCode
-                                 ,A.CompanyName
-                                 ,A.IsCertificate
-                                 ,A.IsCustomLayout
-                                 ,B.TOC
-                                 ,B.DocumentType
-                                 FROM [epolicy].[msPartner] A WITH(NOLOCK)
-                                 INNER JOIN [epolicy].[ProductSetup] B WITH(NOLOCK)
-                                 ON A.CompanyCode = B.CompanyCode
-                                 WHERE B.TOC = '{0}' 
-                                 AND B.InsuredId = '{1}' 
-                                 AND B.SourceId = '{2}'";
+                                  TOC
+                                 ,SourceId
+                                 ,InsuredId
+                                 ,CompanyCode
+                                 ,DocumentType
+                                 ,IsCertificate                                 
+                                 ,IsCustomLayout                                 
+                                 FROM [EPolicy].[ProductSetup] WITH(NOLOCK)
+                                 WHERE TOC = '{0}'";
 
                 query = string.Format(query, toc, insuredId, sourceId);
 
                 DataTable dataTable = _SQLDatabase.ExecuteQuery(query, CommandType.Text);
 
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow[] drCustomLayoutArray = dataTable.Select("IsCustomLayout = 1");
+
+                    if (drCustomLayoutArray.Any())
+                    {
+                        DataTable dtCustomLayout = drCustomLayoutArray.CopyToDataTable();
+                        DataRow[] drProductSetupArray = dataTable.Select(string.Format("SourceId = '{0}' AND InsuredId = '{1}'", sourceId, insuredId));
+
+                        if (drProductSetupArray.Any())
+                        {
+                            dataTable = drProductSetupArray.CopyToDataTable();
+                        }
+                        else
+                        {
+                            drProductSetupArray = dataTable.Select("SourceId = '' and InsuredId = ''");
+                            if (drProductSetupArray.Any())
+                            {
+                                dataTable = drProductSetupArray.CopyToDataTable();
+                            }
+                            else
+                            {
+                                dataTable.Rows.Clear();
+                            }
+                        }
+                    }
+
+                    if (dataTable.Rows.Count > 0 && documentType != "ALL")
+                    {
+                        DataRow[] foundDocument = dataTable.Select(string.Format("DocumentType = '{0}'", documentType));
+
+                        if (foundDocument.Length == 0)
+                        {
+                            MessageException.NoLogMessageException(string.Format("Document Type Selected isn't Available !", documentType));
+                        }
+                    }
+                }
+
+                if (dataTable.Rows.Count == 0) dataTable.Rows.Add(toc, "", "", "Default", "PS", 1, 1);
                 result = dataTable.Rows[0];
             }
             catch (Exception)
@@ -93,19 +125,13 @@ namespace E_Policy.Models
 
             try
             {
-                if (!Directory.Exists(source)) throw new Exception("File Not Found !");
-
-                string fileCompression = string.Format("{0}.zip", source);
-                if (File.Exists(fileCompression)) File.Delete(fileCompression);
-                ZipFile.CreateFromDirectory(source, fileCompression);
-
-                FileInfo fileInfo = new FileInfo(fileCompression);
+                FileInfo fileInfo = new FileInfo(source);
 
                 result["FileName"] = fileInfo.Name;
-                result["File"] = File.ReadAllBytes(fileCompression);
+                result["File"] = File.ReadAllBytes(source);
 
                 //---Delete File---
-                Directory.Delete(source, true);
+                //Directory.Delete(source, true);
             }
             catch (Exception)
             {

@@ -47,16 +47,9 @@ namespace E_Policy.Controllers
                     MessageException.NoLogMessageException("CI Number / Polis Number Can't Empty !");
                 }
 
-                if (request.ContainsKey("StartCertificateNo"))
-                {
-                    if (string.IsNullOrEmpty(request["StartCertificateNo"].ToString())) request.Remove("StartCertificateNo");
-                }
+                if (!request.ContainsKey("StartCertificateNo")) request.Add("StartCertificateNo", "");
+                if (!request.ContainsKey("EndCertificateNo")) request.Add("EndCertificateNo", "");
 
-                if (request.ContainsKey("EndCertificateNo"))
-                {
-                    if (string.IsNullOrEmpty(request["EndCertificateNo"].ToString())) request.Remove("EndCertificateNo");
-                }
-                
                 policyModel.GetPolicy(request);
                 return SuccessResponse(string.Empty);
             }
@@ -68,38 +61,38 @@ namespace E_Policy.Controllers
 
         [AuthorizationValidation]
         [HttpPost]
-        public IHttpActionResult GenerateDocument(List<Dictionary<string, object>> requests)
+        public IHttpActionResult GetRequest(Dictionary<string, object> request)
         {
             try
             {
-                if (requests == null)
+                if (request == null)
                 {
                     MessageException.NoLogMessageException("No Parameter !");
                 }
 
-                object data = policyModel.GenerateDocument(requests);
+                object data = policyModel.GetRequest(request);
                 return SuccessResponse(string.Empty, data);
             }
             catch (Exception ex)
             {
-                return ErrorResponse("Policy | GenerateDocument", ex.Message);
+                return ErrorResponse("Policy | GetRequest", ex.Message);
             }
         }
 
         [AuthorizationValidation]
         [HttpGet]
-        public HttpResponseMessage Download(string source = "")
+        public HttpResponseMessage Download(string url = "")
         {
             HttpResponseMessage response;
 
             try
             {
-                if (string.IsNullOrEmpty(source))
+                if (string.IsNullOrEmpty(url))
                 {
                     throw new Exception("No Parameter !");
                 }
 
-                Dictionary<string, object> result = policyModel.DownloadFile(source);
+                Dictionary<string, object> result = policyModel.DownloadFile(url);
                 response = new HttpResponseMessage(HttpStatusCode.OK);
                 response.Content = new ByteArrayContent((byte[])result["File"]);
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");

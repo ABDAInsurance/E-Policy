@@ -54,12 +54,15 @@ namespace E_Policy.Models.Utilities
             return dataTable;
         }
 
-        public void ExecuteNonQuery(string query, CommandType commandType, List<SqlParameter> sqlParameters = null)
+        public int ExecuteNonQuery(string query, CommandType commandType, bool isReturnId, List<SqlParameter> sqlParameters = null)
         {
+            int result = 0;
             if (sqlParameters == null) sqlParameters = new List<SqlParameter>();
 
             try
             {
+                if (isReturnId) query += "SELECT CAST(SCOPE_IDENTITY() As Int)";
+                
                 sqlConnection.Open();
                 sqlTransaction = sqlConnection.BeginTransaction();
 
@@ -76,7 +79,14 @@ namespace E_Policy.Models.Utilities
                     sqlCommand.Parameters.Add(sqlParameter);
                 }
 
-                sqlCommand.ExecuteNonQuery();
+                if (isReturnId)
+                {
+                    result = (int)sqlCommand.ExecuteScalar();
+                }
+                else
+                {
+                    sqlCommand.ExecuteNonQuery();
+                }
 
                 sqlTransaction.Commit();
             }
@@ -89,6 +99,8 @@ namespace E_Policy.Models.Utilities
             {
                 if (sqlConnection.State == ConnectionState.Open) sqlConnection.Close();
             }
+
+            return result;
         }
 
         public void TransferToDataBase(DataTable dataTable, string tableName)
@@ -105,6 +117,8 @@ namespace E_Policy.Models.Utilities
                 sqlDataAdapter.Fill(dtTemporary);
 
                 SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(sqlDataAdapter);
+
+
                 if (dataTable.GetChanges(DataRowState.Added) != null)
                 {
                     sqlDataAdapter.InsertCommand = sqlCommandBuilder.GetInsertCommand();

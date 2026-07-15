@@ -51,26 +51,10 @@
     <Reference Include="NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.6.0.7\lib\net46\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.6.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -113,101 +97,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\NonPSReportService\Build.wsdl" />
-    <None Include="Connected Services\NonPSReportService\Build.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\NonPSReportService\Build1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.CancellationFacultativeReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.CoinsuranceFollowerCommissionNoteReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.CoinsuranceFollowerPremiumNoteReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.CommissionNoteReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.EndorsementAttachmentReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.EndorsementFacultativeReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.EndorsementReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.FacultativeReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\NonPSReportService\E_Policy.NonPSReportService.PremiumNoteReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Connected Services\PSReportService\Build1.wsdl" />
-    <None Include="Connected Services\PSReportService\Build2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PSReportService\Build21.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PSReportService\configuration91.svcinfo" />
-    <None Include="Connected Services\PSReportService\configuration.svcinfo" />
-    <None Include="Connected Services\PSReportService\Build1.disco" />
-    <None Include="Connected Services\NonPSReportService\Build.disco" />
-    <None Include="Connected Services\NonPSReportService\configuration91.svcinfo" />
-    <None Include="Connected Services\NonPSReportService\configuration.svcinfo" />
-    <None Include="Connected Services\NonPSReportService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Content Include="Connected Services\PSReportService\E_Policy.PSReportService.PolicyCertificateReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PSReportService\E_Policy.PSReportService.PolicyScheduleAttacmentReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PSReportService\E_Policy.PSReportService.PolicyScheduleReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PSReportService\E_Policy.PSReportService.PolicyCustomCertificateResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Connected Services\PSReportService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AuthorizationValidation.cs" />
-    <Compile Include="Connected Services\NonPSReportService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Connected Services\PSReportService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
-    <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Dao\ApiSetupDao.cs" />
     <Compile Include="MessageException.cs" />
-    <Compile Include="Models\Constant\RequestStatus.cs" />
     <Compile Include="Models\PolicyModel.cs" />
-    <Compile Include="Models\RequestModel.cs" />
     <Compile Include="Models\Utilities\SQLDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -231,10 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\NonPSReportService\" />
-    <WCFMetadataStorage Include="Connected Services\PSReportService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

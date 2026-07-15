@@ -28,6 +28,8 @@ namespace E_Policy.Service
             stopwatch.Stop();
             TimeSpan timeSpan = stopwatch.Elapsed;
             MessageLog.Debug(string.Format("Time Taken : {0}", timeSpan.ToString(@"m\:ss\.fff")));
+
+            NLog.LogManager.Shutdown();
         }
 
         protected override void OnStart(string[] args)
@@ -46,6 +48,8 @@ namespace E_Policy.Service
             schedulerTimer.Dispose();
 
             MessageLog.Info("Service Stopping ...");
+
+            NLog.LogManager.Shutdown();
         }
 
         private void OnTimerEvent(object source, ElapsedEventArgs e)
