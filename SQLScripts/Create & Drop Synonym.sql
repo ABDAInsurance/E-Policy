@@ -1,0 +1,9 @@
+---Drop Synonym---
+DROP SYNONYM SysUser
+DROP SYNONYM SysUserBranch
+DROP SYNONYM SysTab
+
+---Create Synonym---
+CREATE SYNONYM [ACCEPTANCE] FOR [SEA4].[dbo].[ACCEPTANCE]
+CREATE SYNONYM [ACCPIC] FOR [SEA4].[dbo].[ACCPIC]
+CREATE SYNONYM [Cover] FOR [SEA4].[dbo].[Cover]
