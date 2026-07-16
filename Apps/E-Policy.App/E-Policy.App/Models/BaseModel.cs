@@ -125,13 +125,11 @@ namespace E_Policy.App.Models
 
             try
             {
-                FileInfo fileInfo = new FileInfo(source);
+                if(!File.Exists(source)) throw new Exception("File Not Found !");
 
+                FileInfo fileInfo = new FileInfo(source);
                 result["FileName"] = fileInfo.Name;
                 result["File"] = File.ReadAllBytes(source);
-
-                //---Delete File---
-                //Directory.Delete(source, true);
             }
             catch (Exception)
             {

@@ -111,11 +111,11 @@ namespace E_Policy.Service.Jobs
 
                             if (dataRow["DocumentType"].ToString() == "ALL" || dataRow["DocumentType"].ToString() == "PS")
                             {
-
                                 //---Generate PS---
                                 rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", ApplicationConfiguration.ApplicationPath, dataRow["CompanyCode"], "PS", dataRow["TOC"]);
                                 if (dataRow["CompanyCode"].ToString() == "Default") rptFile = string.Format(@"{0}\RPT\Default\PS.rpt", ApplicationConfiguration.ApplicationPath);
                                 fileName = string.Format("{0} (PS).pdf", dataRow["PolicyNo"]);
+                                if(dataRow["TOC"].ToString() == "1015") fileName = string.Format("{0}_{1} (PS).pdf", dataRow["RegisterNo"], dataRow["InsuredName"]);
 
                                 //---Remove File Existing---
                                 if (File.Exists(destinationPath + "\\" + fileName))
@@ -124,8 +124,7 @@ namespace E_Policy.Service.Jobs
                                 }
 
                                 _CareService.GeneratePolicySchedule(Convert.ToInt32(dataRow["Ano"]), destinationPath + "\\" + fileName, rptFile);
-                                if (Convert.ToBoolean(dataRow["IsUploadToCare"])) careUploads.Add(destinationPath + "\\" + fileName);
-
+                                if (Convert.ToBoolean(dataRow["IsUploadToCare"]) && !careUploads.Contains(destinationPath + "\\" + fileName)) careUploads.Add(destinationPath + "\\" + fileName);
                             }
 
                             if (dataRow["DocumentType"].ToString() == "ALL" || dataRow["DocumentType"].ToString() == "PN")
@@ -133,6 +132,7 @@ namespace E_Policy.Service.Jobs
                                 //---Generate PN---
                                 rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", ApplicationConfiguration.ApplicationPath, dataRow["CompanyCode"], "PN", dataRow["TOC"]);
                                 fileName = string.Format("{0} (PN).pdf", dataRow["PolicyNo"]);
+                                if (dataRow["TOC"].ToString() == "1015") fileName = string.Format("{0}_{1} (PN).pdf", dataRow["RegisterNo"], dataRow["InsuredName"]);
 
                                 //---Remove File Existing---
                                 if (File.Exists(destinationPath + "\\" + fileName))
@@ -143,7 +143,7 @@ namespace E_Policy.Service.Jobs
                                 if (File.Exists(rptFile))
                                 {
                                     _CareService.GeneratePremiumNote(Convert.ToInt32(dataRow["Ano"]), destinationPath + "\\" + fileName, rptFile);
-                                    if (Convert.ToBoolean(dataRow["IsUploadToCare"])) careUploads.Add(destinationPath + "\\" + fileName);
+                                    if (Convert.ToBoolean(dataRow["IsUploadToCare"]) && !careUploads.Contains(destinationPath + "\\" + fileName)) careUploads.Add(destinationPath + "\\" + fileName);
                                 }
                             }
                         }
@@ -159,6 +159,7 @@ namespace E_Policy.Service.Jobs
                             }
 
                             GeneratePolicyScheduleByApi(apiUrl, destinationPath + "\\" + fileName);
+                            if (Convert.ToBoolean(dataRow["IsUploadToCare"]) && !careUploads.Contains(destinationPath + "\\" + fileName)) careUploads.Add(destinationPath + "\\" + fileName);
                         }
                     }
                 }
@@ -168,6 +169,8 @@ namespace E_Policy.Service.Jobs
                 {
                     _CareService.UploadPolicyDocument(parentAno, careUpload);
                 }
+
+                careUploads.Clear();
             }
             catch (Exception)
             {
@@ -196,9 +199,13 @@ namespace E_Policy.Service.Jobs
                                  ,A.IsTax                                 
                                  ,B.Ano
                                  ,B.PolicyNo
+                                 ,C.RegNo As RegisterNo
+                                 ,C.AName As InsuredName
                                  FROM [EPolicy].[Request] A WITH(NOLOCK) 
                                  INNER JOIN [EPolicy].[RequestDetail] B WITH(NOLOCK)
                                  ON A.Id = B.Headerid
+                                 INNER JOIN ACCEPTANCE C WITH(NOLOCK)
+                                 ON B.Ano = C.Ano
                                  WHERE A.Status = 'P'
                                  ORDER BY A.IsTax, A.Id";
 

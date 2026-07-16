@@ -194,13 +194,13 @@ namespace E_Policy.App.Models
 
                 _SQLDatabase.TransferToDataBase(dataTable, "[EPolicy].[RequestDetail]");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public void GetPolicy(Dictionary<string, object> request)
+        public void GenerateRequest(Dictionary<string, object> request)
         {
             try
             {
