@@ -115,7 +115,7 @@ namespace E_Policy.Service.Jobs
                                 rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", ApplicationConfiguration.ApplicationPath, dataRow["CompanyCode"], "PS", dataRow["TOC"]);
                                 if (dataRow["CompanyCode"].ToString() == "Default") rptFile = string.Format(@"{0}\RPT\Default\PS.rpt", ApplicationConfiguration.ApplicationPath);
                                 fileName = string.Format("{0} (PS).pdf", dataRow["PolicyNo"]);
-                                if(dataRow["TOC"].ToString() == "1015") fileName = string.Format("{0}_{1} (PS).pdf", dataRow["RegisterNo"], dataRow["InsuredName"]);
+                                if(dataRow["TOC"].ToString() == "1015") fileName = string.Format("{0}_{1} (PS).pdf", dataRow["ReferenceNo"], dataRow["InsuredName"]);
 
                                 //---Remove File Existing---
                                 if (File.Exists(destinationPath + "\\" + fileName))
@@ -132,7 +132,7 @@ namespace E_Policy.Service.Jobs
                                 //---Generate PN---
                                 rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", ApplicationConfiguration.ApplicationPath, dataRow["CompanyCode"], "PN", dataRow["TOC"]);
                                 fileName = string.Format("{0} (PN).pdf", dataRow["PolicyNo"]);
-                                if (dataRow["TOC"].ToString() == "1015") fileName = string.Format("{0}_{1} (PN).pdf", dataRow["RegisterNo"], dataRow["InsuredName"]);
+                                if (dataRow["TOC"].ToString() == "1015") fileName = string.Format("{0}_{1} (PN).pdf", dataRow["ReferenceNo"], dataRow["InsuredName"]);
 
                                 //---Remove File Existing---
                                 if (File.Exists(destinationPath + "\\" + fileName))
@@ -200,6 +200,7 @@ namespace E_Policy.Service.Jobs
                                  ,B.Ano
                                  ,B.PolicyNo
                                  ,C.RegNo As RegisterNo
+                                 ,C.RefNo As ReferenceNo
                                  ,C.AName As InsuredName
                                  FROM [EPolicy].[Request] A WITH(NOLOCK) 
                                  INNER JOIN [EPolicy].[RequestDetail] B WITH(NOLOCK)
