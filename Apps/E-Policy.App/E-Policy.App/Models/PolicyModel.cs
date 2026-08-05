@@ -184,7 +184,7 @@ namespace E_Policy.App.Models
                     dataRow["HeaderId"] = newId;
                     dataRow["Ano"] = drPolicy["Ano"];
                     dataRow["PolicyNo"] = documentNo;
-                    if (Convert.ToInt32(drPolicy["LAno"]) > 0) dataRow["PolicyNo"] = string.Format("{0}-{1}", documentNo, drPolicy["CertificateNo"]);
+                    if (Convert.ToInt32(drPolicy["LAno"]) > 0 && Convert.ToInt32(drPolicy["Ano"]) !=Convert.ToInt32(drPolicy["LAno"])) dataRow["PolicyNo"] = string.Format("{0}-{1}", documentNo, drPolicy["CertificateNo"]);
                     dataRow["CreatedBy"] = request["UserId"];
                     dataRow["CreatedDate"] = DateTime.Now;
                     dataRow["UpdatedBy"] = request["UserId"];
