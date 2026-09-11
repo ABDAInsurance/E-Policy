@@ -68,8 +68,8 @@ namespace E_Policy.App.Models
                 if (drPolicyFirstRow["PolicyStatus"].ToString() == "W") documentNo = drPolicyFirstRow["RegisterNo"].ToString();
 
                 //---Insert Table Request---
-                string query = @"INSERT [EPolicy].[Request]([ParentAno],[PolicyNo],[StartCertificateNo],[EndCertificateNo],[TOC],[CompanyCode],[DocumentType],[ApiUrl],[IsCertificate],[IsCustomLayout],[IsUploadToCare],[DownloadUrl],[IsTax],[FailedCount],[Status],[Message],[CreatedBy],[CreatedDate],[UpdatedBy],[UpdatedDate],[TOPRO])
-                                 VALUES(@ParentAno,@PolicyNo,@StartCertificateNo,@EndCertificateNo,@TOC,@CompanyCode,@DocumentType,@ApiUrl,@IsCertificate,@IsCustomLayout,@IsUploadToCare,'',@IsTax,0,'P','',@UserId,@CurrentDate,@UserId,@CurrentDate,@TOPRO)";
+                string query = @"INSERT [EPolicy].[Request]([ParentAno],[PolicyNo],[StartCertificateNo],[EndCertificateNo],[TOC],[CompanyCode],[DocumentType],[ApiUrl],[IsCertificate],[IsCustomLayout],[IsUploadToCare],[DownloadUrl],[IsTax],[FailedCount],[Status],[Message],[CreatedBy],[CreatedDate],[UpdatedBy],[UpdatedDate],[isIndividual])
+                                 VALUES(@ParentAno,@PolicyNo,@StartCertificateNo,@EndCertificateNo,@TOC,@CompanyCode,@DocumentType,@ApiUrl,@IsCertificate,@IsCustomLayout,@IsUploadToCare,'',@IsTax,0,'P','',@UserId,@CurrentDate,@UserId,@CurrentDate,@isIndividual)";
 
                 sqlParameters.Clear();
                 sqlParameters.Add(new SqlParameter()
@@ -157,8 +157,8 @@ namespace E_Policy.App.Models
                 });
                 sqlParameters.Add(new SqlParameter()
                 {
-                    ParameterName = "@TOPRO",
-                    Value = dtPolicy.Rows[0]["TOPRO"]
+                    ParameterName = "@isIndividual",
+                    Value = request["IsIndividual"]
                 });
                 int newId = _SQLDatabase.ExecuteNonQuery(query, CommandType.Text, true, sqlParameters);
 
@@ -275,6 +275,7 @@ namespace E_Policy.App.Models
                         request.Add("ApiUrl", "");
                         request.Add("IsCertificate", true);
                         request.Add("IsCustomLayout", true);
+                        request.Add("IsIndividual", false);  
                         request.Add("CompanyCode", "");
 
                         if (string.IsNullOrEmpty(request["StartCertificateNo"].ToString()) || string.IsNullOrEmpty(request["EndCertificateNo"].ToString()))
@@ -306,6 +307,7 @@ namespace E_Policy.App.Models
                             request.Add("ApiUrl", "");
                             request.Add("IsCertificate", drPartner["IsCertificate"]);
                             request.Add("IsCustomLayout", true);
+                            request.Add("IsIndividual", !isCertificate);
                             request.Add("CompanyCode", drPartner["CompanyCode"]);
                         }
                         else
@@ -315,6 +317,7 @@ namespace E_Policy.App.Models
                             request.Add("ApiUrl", ApiSetupDao.Url);
                             request.Add("IsCertificate", false);
                             request.Add("IsCustomLayout", true);
+                            request.Add("IsIndividual", false); 
                             request.Add("CompanyCode", "");
                         }
                     }
