@@ -223,9 +223,9 @@ namespace E_Policy.App.Models
                                 ,B.PolicyType
                                 ,A.AType As PolicyStatusType                                
                                 ,A.AStatus As PolicyStatus
+                                ,A.TOPRO As TOPRO
                                 FROM ACCEPTANCE A WITH(NOLOCK)
                                 INNER JOIN Cover B WITH(NOLOCK)
-                                ,A.TOPRO As TOPRO
                                 ON A.Cno = B.Cno
                                 WHERE A.AType <> 'C' 
                                 AND A.AStatus IN ('W', 'I')
