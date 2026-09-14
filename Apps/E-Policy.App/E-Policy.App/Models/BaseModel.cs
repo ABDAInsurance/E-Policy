@@ -47,7 +47,7 @@ namespace E_Policy.App.Models
             return ApiSetupDao;
         }
 
-        public DataRow GetPartnerSetup(string documentType, string toc, string sourceId, string insuredId)
+        public DataRow GetPartnerSetup(string documentType, string toc, string sourceId, string insuredId, string topro, bool isCertificate)
         {
             DataRow result;
             
@@ -60,11 +60,19 @@ namespace E_Policy.App.Models
                                  ,CompanyCode
                                  ,DocumentType
                                  ,IsCertificate                                 
-                                 ,IsCustomLayout                                 
+                                 ,IsCustomLayout
+                                 ,Topro
                                  FROM [EPolicy].[ProductSetup] WITH(NOLOCK)
-                                 WHERE TOC = '{0}'";
+                                 WHERE TOC = '{0}' AND ISCertificate = {1}";
 
-                query = string.Format(query, toc, insuredId, sourceId);
+
+                if (!isCertificate)
+                {
+                    query += " AND TOPRO = '{2}' ";
+                } 
+                
+
+                query = string.Format(query,toc,isCertificate?1:0, topro);
 
                 DataTable dataTable = _SQLDatabase.ExecuteQuery(query, CommandType.Text);
 

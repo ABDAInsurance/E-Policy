@@ -111,8 +111,17 @@ namespace E_Policy.Service.Jobs
 
                             if (dataRow["DocumentType"].ToString() == "ALL" || dataRow["DocumentType"].ToString() == "PS")
                             {
+                                //--Cek TOPRO 
+                                if (Convert.ToBoolean(dataRow["IsIndividual"])) 
+                                {
+                                    rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}_{4}.rpt", ApplicationConfiguration.ApplicationPath, dataRow["CompanyCode"], "PS", dataRow["TOC"], dataRow["Topro"]);
+                                }
+                                else
+                                {
+                                    rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", ApplicationConfiguration.ApplicationPath, dataRow["CompanyCode"], "PS", dataRow["TOC"]);
+                                }
+
                                 //---Generate PS---
-                                rptFile = string.Format(@"{0}\RPT\{1}\{2}_{3}.rpt", ApplicationConfiguration.ApplicationPath, dataRow["CompanyCode"], "PS", dataRow["TOC"]);
                                 if (dataRow["CompanyCode"].ToString() == "Default") rptFile = string.Format(@"{0}\RPT\Default\PS.rpt", ApplicationConfiguration.ApplicationPath);
                                 fileName = string.Format("{0} (PS).pdf", dataRow["PolicyNo"]);
                                 if(dataRow["TOC"].ToString() == "1015") fileName = string.Format("{0}_{1} (PS).pdf", dataRow["ReferenceNo"], dataRow["InsuredName"]);
@@ -196,12 +205,14 @@ namespace E_Policy.Service.Jobs
                                  ,A.ApiUrl
                                  ,A.IsCertificate
                                  ,A.IsUploadToCare
-                                 ,A.IsTax                                 
+                                 ,A.IsTax
+                                 ,A.IsIndividual
                                  ,B.Ano
                                  ,B.PolicyNo
                                  ,C.RegNo As RegisterNo
                                  ,C.RefNo As ReferenceNo
                                  ,C.AName As InsuredName
+                                 ,C.TOPRO As TOPRO
                                  FROM [EPolicy].[Request] A WITH(NOLOCK) 
                                  INNER JOIN [EPolicy].[RequestDetail] B WITH(NOLOCK)
                                  ON A.Id = B.Headerid
